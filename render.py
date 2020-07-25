@@ -118,14 +118,44 @@ class render(object):
 
     def glLine(self, x0, y0, x1, y1):
         # x0: x inicial de la linea
-        x0 = self.xVP + (x0 + 1) * (self.widthVP / 2)
+        x0 = round(self.xVP + (x0 + 1) * (self.widthVP / 2))
         # x1: x final de la linea
-        x1 = self.xVP + (x1 + 1) * (self.widthVP / 2)
+        x1 = round(self.xVP + (x1 + 1) * (self.widthVP / 2))
         # y0: y inicial de la linea
-        y0 = self.yVP + (y0 + 1) * (self.heightVP / 2)
+        y0 = round(self.yVP + (y0 + 1) * (self.heightVP / 2))
         # y1: y final de la linea
-        y1 = self.yVP + (y1 + 1) * (self.heightVP / 2)
+        y1 = round(self.yVP + (y1 + 1) * (self.heightVP / 2))
 
+        dx = abs(x1 - x0)
+        dy = abs(y1 - y0)
 
+        steep = dy > dx
 
+        if steep:
+            x0, y0 = y0, x0
+            x1, y1 = y1, x1
+
+        if x0 > x1:
+            x0, x1 = x1, x0
+            y0, y1 = y1, y0
+
+        dx = abs(x1 - x0)
+        dy = abs(y1 - y0)
+
+        cambioPixel = 0
+        cambiar = 0.5
+
+        m = dy / dx
+        y = y0
+
+        for x in range(x0, x1 + 1):
+            if steep:
+                self.pintarPixelIMG(y, x)
+            else:
+                self.pintarPixelIMG(x, y)
+
+            cambioPixel += m
+            if cambioPixel >= cambiar:
+                y += 1 if y0 < y1 else -1
+                cambiar += 1
 
