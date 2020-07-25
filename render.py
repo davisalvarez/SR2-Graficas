@@ -160,6 +160,5 @@ class render(object):
                     y += 1
                 else:
                     y -= 1
-                #y += 1 if y0 < y1 else -1
                 cambiar += 1
 
