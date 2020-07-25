@@ -156,6 +156,10 @@ class render(object):
 
             cambioPixel += m
             if cambioPixel >= cambiar:
-                y += 1 if y0 < y1 else -1
+                if y1 > y0:
+                    y += 1
+                else:
+                    y -= 1
+                #y += 1 if y0 < y1 else -1
                 cambiar += 1
 
